@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast"
 
 interface Todo {
   id: string
-  text: string
+  title: string
   completed: boolean
   createdAt: string
 }
@@ -27,12 +27,13 @@ export default function TodoApp() {
 
   const fetchTodos = async () => {
     try {
-      const response = await fetch("/api/todos")
+      const response = await fetch("http://localhost:5000/todos")
       if (response.ok) {
         const data = await response.json()
         setTodos(data)
       }
     } catch (error) {
+      console.error("Failed to fetch todos:", error)
       toast({
         title: "Error",
         description: "Failed to fetch todos",
@@ -46,7 +47,7 @@ export default function TodoApp() {
 
     setLoading(true)
     try {
-      const response = await fetch("/api/todos", {
+      const response = await fetch("http://localhost:5000/todos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,9 +67,11 @@ export default function TodoApp() {
         throw new Error("Failed to add todo")
       }
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to add todo"
       toast({
         title: "Error",
-        description: "Failed to add todo",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {
@@ -78,17 +81,20 @@ export default function TodoApp() {
 
   const toggleTodo = async (id: string) => {
     try {
-      const response = await fetch(`/api/todos/${id}`, {
+      const response = await fetch(`http://localhost:5000/todos/${id}`, {
         method: "PATCH",
       })
 
       if (response.ok) {
         const updatedTodo = await response.json()
-        setTodos((prev) => prev.map((todo) => (todo.id === id ? updatedTodo : todo)))
+        setTodos((prev) =>
+          prev.map((todo) => (todo.id === id ? updatedTodo : todo))
+        )
       } else {
         throw new Error("Failed to update todo")
       }
     } catch (error) {
+      console.error("Failed to update todo:", error)
       toast({
         title: "Error",
         description: "Failed to update todo",
@@ -99,7 +105,7 @@ export default function TodoApp() {
 
   const deleteTodo = async (id: string) => {
     try {
-      const response = await fetch(`/api/todos/${id}`, {
+      const response = await fetch(`http://localhost:5000/todos/${id}`, {
         method: "DELETE",
       })
 
@@ -113,6 +119,7 @@ export default function TodoApp() {
         throw new Error("Failed to delete todo")
       }
     } catch (error) {
+      console.error("Failed to delete todo:", error)
       toast({
         title: "Error",
         description: "Failed to delete todo",
@@ -129,7 +136,9 @@ export default function TodoApp() {
       <div className="max-w-2xl mx-auto">
         <Card className="shadow-lg">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold text-gray-800">Todo Application</CardTitle>
+            <CardTitle className="text-3xl font-bold text-gray-800">
+              Todo Application
+            </CardTitle>
             <p className="text-gray-600">
               {completedCount} of {totalCount} tasks completed
             </p>
@@ -148,7 +157,11 @@ export default function TodoApp() {
                 }}
                 className="flex-1"
               />
-              <Button onClick={addTodo} disabled={loading || !newTodo.trim()} className="px-6">
+              <Button
+                onClick={addTodo}
+                disabled={loading || !newTodo.trim()}
+                className="px-6"
+              >
                 <Plus className="w-4 h-4 mr-2" />
                 Add
               </Button>
@@ -166,10 +179,15 @@ export default function TodoApp() {
                   <div
                     key={todo.id}
                     className={`flex items-center gap-3 p-4 rounded-lg border transition-all hover:shadow-md ${
-                      todo.completed ? "bg-gray-50 border-gray-200" : "bg-white border-gray-300"
+                      todo.completed
+                        ? "bg-gray-50 border-gray-200"
+                        : "bg-white border-gray-300"
                     }`}
                   >
-                    <button onClick={() => toggleTodo(todo.id)} className="flex-shrink-0">
+                    <button
+                      onClick={() => toggleTodo(todo.id)}
+                      className="flex-shrink-0"
+                    >
                       {todo.completed ? (
                         <CheckCircle2 className="w-5 h-5 text-green-500" />
                       ) : (
@@ -177,8 +195,14 @@ export default function TodoApp() {
                       )}
                     </button>
 
-                    <span className={`flex-1 ${todo.completed ? "line-through text-gray-500" : "text-gray-800"}`}>
-                      {todo.text}
+                    <span
+                      className={`flex-1 ${
+                        todo.completed
+                          ? "line-through text-gray-500"
+                          : "text-gray-800"
+                      }`}
+                    >
+                      {todo.title}
                     </span>
 
                     <Button
