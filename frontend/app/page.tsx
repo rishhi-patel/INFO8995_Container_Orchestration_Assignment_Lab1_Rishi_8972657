@@ -27,7 +27,7 @@ export default function TodoApp() {
 
   const fetchTodos = async () => {
     try {
-      const response = await fetch("http://localhost:5000/todos")
+      const response = await fetch("/todos")
       if (response.ok) {
         const data = await response.json()
         setTodos(data)
@@ -47,7 +47,7 @@ export default function TodoApp() {
 
     setLoading(true)
     try {
-      const response = await fetch("http://localhost:5000/todos", {
+      const response = await fetch("/todos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +81,7 @@ export default function TodoApp() {
 
   const toggleTodo = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/todos/${id}`, {
+      const response = await fetch(`/todos/${id}`, {
         method: "PATCH",
       })
 
@@ -105,7 +105,7 @@ export default function TodoApp() {
 
   const deleteTodo = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/todos/${id}`, {
+      const response = await fetch(`/todos/${id}`, {
         method: "DELETE",
       })
 
