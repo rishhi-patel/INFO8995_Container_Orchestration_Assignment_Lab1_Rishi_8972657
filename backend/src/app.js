@@ -1,7 +1,7 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const todoRoutes = require("./routes/todos")
-const db = require("./config/db") // Initializes and connects DB
+const db = require("./config/db")
 
 const app = express()
 
