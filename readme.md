@@ -11,8 +11,8 @@ This project demonstrates a multi-service architecture using **Docker Compose**,
 
 The project is organized into two Compose files to align with assignment sections:
 
-✅ **Multiple Services** → MySQL + PHPMyAdmin
-✅ **Application with Dependencies** → PostgreSQL + pgAdmin + ReactJS + NodeJS API (with scaling + load balancing)
+- ✅ **Multiple Services** → MySQL + PHPMyAdmin
+- ✅ **Application with Dependencies** → PostgreSQL + pgAdmin + ReactJS + NodeJS API (with scaling + load balancing)
 
 ---
 
@@ -108,14 +108,14 @@ Access:
 
 ## ✅ Key Features Demonstrated
 
-✅ Multiple services in Compose
-✅ Environment variables for DB credentials
-✅ Persistent storage with volumes
-✅ Application dependencies and health checks
-✅ Multi-stage builds for React and NodeJS
-✅ Scaling and load balancing with Nginx upstream config
-✅ Clean architecture → Nginx as single entry point → no CORS issues
-✅ Organized Compose files → aligned with assignment sections
+- ✅ Multiple services in Compose
+- ✅ Environment variables for DB credentials
+- ✅ Persistent storage with volumes
+- ✅ Application dependencies and health checks
+- ✅ Multi-stage builds for React and NodeJS
+- ✅ Scaling and load balancing with Nginx upstream config
+- ✅ Clean architecture → Nginx as single entry point → no CORS issues
+- ✅ Organized Compose files → aligned with assignment sections
 
 ---
 
