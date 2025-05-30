@@ -52,7 +52,7 @@ export default function TodoApp() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text: newTodo.trim() }),
+        body: JSON.stringify({ title: newTodo.trim() }),
       })
 
       if (response.ok) {
@@ -76,30 +76,6 @@ export default function TodoApp() {
       })
     } finally {
       setLoading(false)
-    }
-  }
-
-  const toggleTodo = async (id: string) => {
-    try {
-      const response = await fetch(`/todos/${id}`, {
-        method: "PATCH",
-      })
-
-      if (response.ok) {
-        const updatedTodo = await response.json()
-        setTodos((prev) =>
-          prev.map((todo) => (todo.id === id ? updatedTodo : todo))
-        )
-      } else {
-        throw new Error("Failed to update todo")
-      }
-    } catch (error) {
-      console.error("Failed to update todo:", error)
-      toast({
-        title: "Error",
-        description: "Failed to update todo",
-        variant: "destructive",
-      })
     }
   }
 
@@ -184,17 +160,6 @@ export default function TodoApp() {
                         : "bg-white border-gray-300"
                     }`}
                   >
-                    <button
-                      onClick={() => toggleTodo(todo.id)}
-                      className="flex-shrink-0"
-                    >
-                      {todo.completed ? (
-                        <CheckCircle2 className="w-5 h-5 text-green-500" />
-                      ) : (
-                        <Circle className="w-5 h-5 text-gray-400 hover:text-gray-600" />
-                      )}
-                    </button>
-
                     <span
                       className={`flex-1 ${
                         todo.completed
