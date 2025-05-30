@@ -27,6 +27,12 @@ The project is organized into two Compose files to align with assignment section
 - ✅ Credentials managed via environment variables
 - ✅ Persistent data storage using Docker volumes
 
+## 📝 Screenshots
+![image](https://github.com/user-attachments/assets/030020aa-9264-495f-a34b-042251d723fb)
+
+![image](https://github.com/user-attachments/assets/2167fe74-6394-461e-a3b4-a7c0a37799ff)
+
+
 ---
 
 ### `docker-compose.pg.yml`
@@ -41,6 +47,17 @@ The project is organized into two Compose files to align with assignment section
 - ✅ Backend API **scaled to 3 replicas**
 - ✅ Nginx **load balances** across API replicas
 - ✅ Nginx serves React static build — **single entry point** → no CORS issues
+
+## 📝 Screenshots
+
+![image](https://github.com/user-attachments/assets/1d2fc817-2033-4e90-8ec9-084263f3774d)
+
+![image](https://github.com/user-attachments/assets/1a47d1d0-6511-423a-bd16-8fa8f794bea1)
+
+![image](https://github.com/user-attachments/assets/12424169-fe64-494f-8666-fc68353f1655)
+
+
+
 
 ---
 
@@ -122,19 +139,6 @@ Access:
 ├── docker-compose.pg.yml     # PostgreSQL + pgAdmin + React + API
 └── README.md           # Project documentation (this file)
 ```
-
----
-
-## 📝 Screenshots to Include
-
-- `docker-compose -f docker-compose.mysql.yml up --build` running
-- `docker-compose -f docker-compose.pg.yml up --build` running
-- PHPMyAdmin in browser (`http://localhost:8081`)
-- pgAdmin in browser (`http://localhost:8082`)
-- React app in browser (`http://localhost:3000`)
-- Network tab showing `/todos` request working
-- Backend replicas load balancing → show logs cycling between replicas
-- CLI output showing healthy containers
 
 ---
 
