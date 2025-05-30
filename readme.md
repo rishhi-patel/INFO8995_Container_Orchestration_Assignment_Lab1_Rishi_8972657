@@ -1,6 +1,6 @@
 # Docker Compose Multi-Service Project
 
-**Student:** Rishiikumar Patel
+**Student:** Rishikumar Patel
 **Student ID:** 8972657
 
 ---
@@ -144,5 +144,5 @@ Access:
 
 ## 🧑 Author
 
-**Rishiikumar Patel**
+**Rishikumar Patel**
 Student ID: **8972657**
