@@ -34,8 +34,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    deploy:
-      replicas: 3    # ← SCALE BACKEND to 3 replicas
+    ports:
+      - "5000:5000"
 
   nginx:
     build: ./frontend
