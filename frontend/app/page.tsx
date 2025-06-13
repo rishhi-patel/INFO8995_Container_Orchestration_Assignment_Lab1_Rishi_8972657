@@ -3,9 +3,23 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { Plus, Edit, Trash2, Eye, UserIcon, Loader2, AlertCircle } from "lucide-react"
+import {
+  Plus,
+  Edit,
+  Trash2,
+  Eye,
+  UserIcon,
+  Loader2,
+  AlertCircle,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import {
   Dialog,
   DialogContent,
@@ -51,7 +65,7 @@ export default function UserDashboard() {
     try {
       setLoading(true)
       setError(null)
-      const response = await axios.get("/user")
+      const response = await axios.get("/api/user")
 
       // Ensure response data is an array
       const userData = response.data
@@ -73,7 +87,7 @@ export default function UserDashboard() {
   const fetchUserDetails = async (id: number) => {
     try {
       setActionLoading(`details-${id}`)
-      const response = await axios.get(`/user/${id}`)
+      const response = await axios.get(`/api/user/${id}`)
       setSelectedUser(response.data)
       setShowUserDetails(true)
     } catch (err: any) {
@@ -88,7 +102,7 @@ export default function UserDashboard() {
     e.preventDefault()
     try {
       setActionLoading("add")
-      await axios.post("/user", newUser)
+      await axios.post("/api/user", newUser)
       setNewUser({ first_name: "", last_name: "" })
       setShowAddForm(false)
       fetchUsers()
@@ -106,7 +120,7 @@ export default function UserDashboard() {
 
     try {
       setActionLoading("edit")
-      await axios.put(`/user/${editingUser.id}`, editUser)
+      await axios.put(`/api/user/${editingUser.id}`, editUser)
       setShowEditForm(false)
       setEditingUser(null)
       fetchUsers()
@@ -123,7 +137,7 @@ export default function UserDashboard() {
 
     try {
       setActionLoading(`delete-${id}`)
-      await axios.delete(`/user/${id}`)
+      await axios.delete(`/api/user/${id}`)
       fetchUsers()
     } catch (err: any) {
       setError(err.response?.data?.message || "Failed to delete user")
@@ -150,8 +164,12 @@ export default function UserDashboard() {
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
-              <p className="text-gray-600 mt-1">Manage your users efficiently</p>
+              <h1 className="text-3xl font-bold text-gray-900">
+                User Management
+              </h1>
+              <p className="text-gray-600 mt-1">
+                Manage your users efficiently
+              </p>
             </div>
             <Dialog open={showAddForm} onOpenChange={setShowAddForm}>
               <DialogTrigger asChild>
@@ -163,7 +181,9 @@ export default function UserDashboard() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Add New User</DialogTitle>
-                  <DialogDescription>Create a new user by filling out the form below.</DialogDescription>
+                  <DialogDescription>
+                    Create a new user by filling out the form below.
+                  </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleAddUser} className="space-y-4">
                   <div>
@@ -171,7 +191,9 @@ export default function UserDashboard() {
                     <Input
                       id="first_name"
                       value={newUser.first_name}
-                      onChange={(e) => setNewUser({ ...newUser, first_name: e.target.value })}
+                      onChange={(e) =>
+                        setNewUser({ ...newUser, first_name: e.target.value })
+                      }
                       required
                     />
                   </div>
@@ -180,16 +202,24 @@ export default function UserDashboard() {
                     <Input
                       id="last_name"
                       value={newUser.last_name}
-                      onChange={(e) => setNewUser({ ...newUser, last_name: e.target.value })}
+                      onChange={(e) =>
+                        setNewUser({ ...newUser, last_name: e.target.value })
+                      }
                       required
                     />
                   </div>
                   <div className="flex justify-end gap-2">
-                    <Button type="button" variant="outline" onClick={() => setShowAddForm(false)}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setShowAddForm(false)}
+                    >
                       Cancel
                     </Button>
                     <Button type="submit" disabled={actionLoading === "add"}>
-                      {actionLoading === "add" && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                      {actionLoading === "add" && (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      )}
                       Add User
                     </Button>
                   </div>
@@ -204,7 +234,12 @@ export default function UserDashboard() {
           <Alert variant="destructive" className="mb-6">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>{error}</AlertDescription>
-            <Button variant="outline" size="sm" className="ml-auto" onClick={() => setError(null)}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="ml-auto"
+              onClick={() => setError(null)}
+            >
               Dismiss
             </Button>
           </Alert>
@@ -225,7 +260,9 @@ export default function UserDashboard() {
                   <div className="flex items-center gap-2">
                     <UserIcon className="h-5 w-5 text-blue-500" />
                     <span className="text-sm text-gray-600">Total Users:</span>
-                    <Badge variant="secondary">{Array.isArray(users) ? users.length : 0}</Badge>
+                    <Badge variant="secondary">
+                      {Array.isArray(users) ? users.length : 0}
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>
@@ -236,8 +273,12 @@ export default function UserDashboard() {
               <Card>
                 <CardContent className="p-12 text-center">
                   <UserIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No users found</h3>
-                  <p className="text-gray-500 mb-4">Get started by adding your first user.</p>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                    No users found
+                  </h3>
+                  <p className="text-gray-500 mb-4">
+                    Get started by adding your first user.
+                  </p>
                   <Button onClick={() => setShowAddForm(true)}>
                     <Plus className="h-4 w-4 mr-2" />
                     Add User
@@ -247,7 +288,10 @@ export default function UserDashboard() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {users.map((user) => (
-                  <Card key={user.id} className="hover:shadow-lg transition-shadow">
+                  <Card
+                    key={user.id}
+                    className="hover:shadow-lg transition-shadow"
+                  >
                     <CardHeader className="pb-3">
                       <div className="flex items-center gap-3">
                         <div className="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
@@ -266,16 +310,8 @@ export default function UserDashboard() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => fetchUserDetails(user.id)}
-                          disabled={actionLoading === `details-${user.id}`}
+                          onClick={() => openEditForm(user)}
                         >
-                          {actionLoading === `details-${user.id}` ? (
-                            <Loader2 className="h-3 w-3 animate-spin" />
-                          ) : (
-                            <Eye className="h-3 w-3" />
-                          )}
-                        </Button>
-                        <Button size="sm" variant="outline" onClick={() => openEditForm(user)}>
                           <Edit className="h-3 w-3" />
                         </Button>
                         <Button
@@ -304,7 +340,9 @@ export default function UserDashboard() {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Edit User</DialogTitle>
-              <DialogDescription>Update the user information below.</DialogDescription>
+              <DialogDescription>
+                Update the user information below.
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleEditUser} className="space-y-4">
               <div>
@@ -312,7 +350,9 @@ export default function UserDashboard() {
                 <Input
                   id="edit_first_name"
                   value={editUser.first_name}
-                  onChange={(e) => setEditUser({ ...editUser, first_name: e.target.value })}
+                  onChange={(e) =>
+                    setEditUser({ ...editUser, first_name: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -321,16 +361,24 @@ export default function UserDashboard() {
                 <Input
                   id="edit_last_name"
                   value={editUser.last_name}
-                  onChange={(e) => setEditUser({ ...editUser, last_name: e.target.value })}
+                  onChange={(e) =>
+                    setEditUser({ ...editUser, last_name: e.target.value })
+                  }
                   required
                 />
               </div>
               <div className="flex justify-end gap-2">
-                <Button type="button" variant="outline" onClick={() => setShowEditForm(false)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowEditForm(false)}
+                >
                   Cancel
                 </Button>
                 <Button type="submit" disabled={actionLoading === "edit"}>
-                  {actionLoading === "edit" && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                  {actionLoading === "edit" && (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  )}
                   Update User
                 </Button>
               </div>
@@ -343,7 +391,9 @@ export default function UserDashboard() {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>User Details</DialogTitle>
-              <DialogDescription>Complete information for the selected user.</DialogDescription>
+              <DialogDescription>
+                Complete information for the selected user.
+              </DialogDescription>
             </DialogHeader>
             {selectedUser && (
               <div className="space-y-4">
@@ -360,38 +410,58 @@ export default function UserDashboard() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-sm font-medium text-gray-500">First Name</Label>
+                    <Label className="text-sm font-medium text-gray-500">
+                      First Name
+                    </Label>
                     <p className="mt-1">{selectedUser.first_name}</p>
                   </div>
                   <div>
-                    <Label className="text-sm font-medium text-gray-500">Last Name</Label>
+                    <Label className="text-sm font-medium text-gray-500">
+                      Last Name
+                    </Label>
                     <p className="mt-1">{selectedUser.last_name}</p>
                   </div>
                   {selectedUser.email && (
                     <div className="col-span-2">
-                      <Label className="text-sm font-medium text-gray-500">Email</Label>
+                      <Label className="text-sm font-medium text-gray-500">
+                        Email
+                      </Label>
                       <p className="mt-1">{selectedUser.email}</p>
                     </div>
                   )}
                   {selectedUser.created_at && (
                     <div>
-                      <Label className="text-sm font-medium text-gray-500">Created</Label>
-                      <p className="mt-1">{new Date(selectedUser.created_at).toLocaleDateString()}</p>
+                      <Label className="text-sm font-medium text-gray-500">
+                        Created
+                      </Label>
+                      <p className="mt-1">
+                        {new Date(selectedUser.created_at).toLocaleDateString()}
+                      </p>
                     </div>
                   )}
                   {selectedUser.updated_at && (
                     <div>
-                      <Label className="text-sm font-medium text-gray-500">Updated</Label>
-                      <p className="mt-1">{new Date(selectedUser.updated_at).toLocaleDateString()}</p>
+                      <Label className="text-sm font-medium text-gray-500">
+                        Updated
+                      </Label>
+                      <p className="mt-1">
+                        {new Date(selectedUser.updated_at).toLocaleDateString()}
+                      </p>
                     </div>
                   )}
                 </div>
                 <div className="flex justify-end gap-2">
-                  <Button variant="outline" onClick={() => openEditForm(selectedUser)}>
+                  <Button
+                    variant="outline"
+                    onClick={() => openEditForm(selectedUser)}
+                  >
                     <Edit className="h-4 w-4 mr-2" />
                     Edit User
                   </Button>
-                  <Button variant="outline" onClick={() => setShowUserDetails(false)}>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowUserDetails(false)}
+                  >
                     Close
                   </Button>
                 </div>
