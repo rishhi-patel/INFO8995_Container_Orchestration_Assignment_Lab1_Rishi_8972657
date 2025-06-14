@@ -1,148 +1,165 @@
-# Docker Compose Multi-Service Project
+# 🐳 Docker Compose Multi-Service Application
 
-**Name:** Rishikumar Patel
+**Author:** Rishikumar Patel
 **Student ID:** 8972657
 
 ---
 
 ## 📚 Overview
 
-This project demonstrates a multi-service architecture using **Docker Compose**, following best practices in containerization, scaling, and persistent data storage.
+This project demonstrates a production-ready, multi-container architecture using **Docker Compose**. It showcases the separation of concerns, container orchestration, service dependency management, persistent storage, and horizontal scalability.
 
-The project is organized into two Compose files to align with assignment sections:
-
-- ✅ **Multiple Services** → MySQL + PHPMyAdmin
-- ✅ **Application with Dependencies** → PostgreSQL + pgAdmin + ReactJS + NodeJS API (with scaling + load balancing)
+- 🔹 `docker-compose.pg.yml` — App with dependencies: PostgreSQL + pgAdmin + Node.js API + React Frontend + Load Balanced via NGINX
 
 ---
 
-## 🛠️ Services Overview
+## 🛠️ Technologies Used
+
+| Technology         | Purpose                                       |
+| ------------------ | --------------------------------------------- |
+| Docker & Compose   | Containerization & orchestration              |
+| PostgreSQL         | Relational database                           |
+| pgAdmin            | PostgreSQL Web GUI                            |
+| Node.js (Express)  | API backend for todos & users                 |
+| React.js           | Frontend UI                                   |
+| NGINX              | Reverse proxy, static hosting, load balancing |
+| Multi-stage builds | Optimize production images                    |
 
 ---
 
-### `docker-compose.mysql.yml`
+## 📁 Project Structure
 
-- ✅ **MySQL** database (port **3306**)
-- ✅ **PHPMyAdmin** GUI (port **8081**)
-- ✅ Credentials managed via environment variables
-- ✅ Persistent data storage using Docker volumes
+```
 
-## 📝 Screenshots
-![image](https://github.com/user-attachments/assets/030020aa-9264-495f-a34b-042251d723fb)
+.
+├── backend/ # Node.js Express API with PostgreSQL
+├── frontend/ # React app served statically via NGINX
+├── nginx/
+│ └── default.conf # Reverse proxy + load balancing config
+├── docker-compose.pg.yml # PostgreSQL + pgAdmin + API + Frontend
+├── README.md # This file
 
-![image](https://github.com/user-attachments/assets/2167fe74-6394-461e-a3b4-a7c0a37799ff)
-
-
----
-
-### `docker-compose.pg.yml`
-
-- ✅ **PostgreSQL** database (port **5432**)
-- ✅ **pgAdmin4** GUI (port **8082**)
-- ✅ pgAdmin starts only after PostgreSQL is healthy (using `depends_on` + healthcheck)
-
-- ✅ **ReactJS (Next.js)** frontend
-- ✅ **NodeJS (Express)** backend API
-- ✅ Multi-stage builds for both React and NodeJS
-- ✅ Backend API **scaled to 3 replicas**
-- ✅ Nginx **load balances** across API replicas
-- ✅ Nginx serves React static build — **single entry point** → no CORS issues
-
-## 📝 Screenshots
-
-![image](https://github.com/user-attachments/assets/1d2fc817-2033-4e90-8ec9-084263f3774d)
-
-![image](https://github.com/user-attachments/assets/1a47d1d0-6511-423a-bd16-8fa8f794bea1)
-
-![image](https://github.com/user-attachments/assets/12424169-fe64-494f-8666-fc68353f1655)
-
-
-
+```
 
 ---
 
-## 🚀 How to Run Services
+## 🧠 Key Features
+
+✅ Multi-service setup using Docker Compose
+✅ PostgreSQL and MySQL with GUI tools
+✅ Health checks and dependency management
+✅ Persistent volume mounts for data storage
+✅ Scalable backend API (3 replicas)
+✅ Reverse proxy using NGINX with API routing
+✅ React frontend served statically
+✅ No CORS issues (single entry point architecture)
+✅ Clean architecture with separation of services
 
 ---
 
-### 1️⃣ MySQL + PHPMyAdmin
+## 🧪 How to Run
+
+### 2️⃣ PostgreSQL + pgAdmin + React + Node.js API + NGINX
 
 ```bash
-docker-compose -f docker-compose.mysql.yml up --build
+docker-compose -f docker-compose.pg.yml up --build --scale backend=3
 ```
 
-Access:
+**Access:**
 
-- PHPMyAdmin → [http://localhost:8081](http://localhost:8081)
-- MySQL database → `localhost:3306`
+- React App: [http://localhost:3000](http://localhost:3000)
+- pgAdmin: [http://localhost:8082](http://localhost:8082)
+- PostgreSQL Port: `localhost:5432`
+- API via NGINX:
 
----
-
-### 2️⃣ PostgreSQL + pgAdmin + React + NodeJS API
-
-```bash
-docker-compose -f docker-compose.pg.yml up --build
-```
-
-Access:
-
-- React app → [http://localhost:3000](http://localhost:3000)
-- pgAdmin → [http://localhost:8082](http://localhost:8082)
-- PostgreSQL database → `localhost:5432`
-- API → `/todos` (load balanced through Nginx)
+  - `GET /api/user`
+  - `POST /api/user`
+  - `GET /api/todos`
+  - etc.
 
 ---
 
-## ⚙️ Ports Summary
+## ⚙️ Port Summary
 
-| Service       | Port                                            |
-| ------------- | ----------------------------------------------- |
-| MySQL         | 3306                                            |
-| PHPMyAdmin    | 8081                                            |
-| PostgreSQL    | 5432                                            |
-| pgAdmin4      | 8082                                            |
-| React + Nginx | 3000                                            |
-| NodeJS API    | Load balanced internally (not exposed directly) |
+| Service                  | Port            |
+| ------------------------ | --------------- |
+| PostgreSQL               | 5432            |
+| pgAdmin                  | 8082            |
+| NGINX (Frontend + API)   | 3000            |
+| Node API (for dev/debug) | 5000 (optional) |
 
 ---
 
-## ✅ Key Features Demonstrated
+## 📦 Docker Highlights
 
-- ✅ Multiple services in Compose
-- ✅ Environment variables for DB credentials
-- ✅ Persistent storage with volumes
-- ✅ Application dependencies and health checks
-- ✅ Multi-stage builds for React and NodeJS
-- ✅ Scaling and load balancing with Nginx upstream config
-- ✅ Clean architecture → Nginx as single entry point → no CORS issues
-- ✅ Organized Compose files → aligned with assignment sections
+- **Volumes**:
 
----
+  - `pg_data`: Persistent PostgreSQL storage
+  - MySQL also uses Docker volume for persistence
 
-## 🧭 Compose Files Summary
+- **Networking**:
 
-| Compose File               | Purpose                                                                                            |
-| -------------------------- | -------------------------------------------------------------------------------------------------- |
-| `docker-compose.mysql.yml` | MySQL + PHPMyAdmin (**Multiple Services**)                                                         |
-| `docker-compose.pg.yml`    | PostgreSQL + pgAdmin + React + API (**Dependencies, Scaling, Load balancing, Multi-stage builds**) |
+  - Services communicate via Compose-defined bridge network
+  - NGINX acts as central gateway to all backend services
 
----
+- **Scaling**:
 
-## 📁 Repository Structure
+  - Express backend scaled to 3 replicas using:
 
-```
-/
-├── backend/            # NodeJS API (multi-stage Dockerfile)
-├── frontend/           # ReactJS app (multi-stage Dockerfile)
-├── nginx/default.conf  # Nginx reverse-proxy config
-├── docker-compose.mysql.yml  # MySQL + PHPMyAdmin
-├── docker-compose.pg.yml     # PostgreSQL + pgAdmin + React + API
-└── README.md           # Project documentation (this file)
-```
+    ```bash
+    docker-compose -f docker-compose.pg.yml up --scale backend=3
+    ```
+
+- **Nginx Load Balancing**:
+
+  - Forwards `/api/*` requests to multiple backend containers
+  - Serves frontend build from `/usr/share/nginx/html`
 
 ---
 
-## 🧑 Author
+## ✅ API Endpoints
+
+### User API
+
+- `GET /api/user`
+- `POST /api/user`
+- `GET /api/user/:id`
+- `PUT /api/user/:id`
+- `DELETE /api/user/:id`
+
+### Todo API
+
+- `GET /api/todos`
+- `POST /api/todos`
+- `DELETE /api/todos/:id`
+
+All responses are returned as JSON.
+
+---
+
+## ✅ Compose File Summary
+
+| File                    | Purpose                                       |
+| ----------------------- | --------------------------------------------- |
+| `docker-compose.pg.yml` | PostgreSQL + pgAdmin + API + Frontend + NGINX |
+
+---
+
+## 📸 Sample Screenshots
+
+> \_\_
+
+---
+
+## 👨‍💻 Author
 
 **Rishikumar Patel**
 Student ID: **8972657**
+
+---
+
+## 📌 Notes
+
+- Make sure Docker is installed and running on your system.
+- If ports are busy, update the exposed ports in the `docker-compose` files.
+- Use `.env` files if needed to manage secrets in production.
