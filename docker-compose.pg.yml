@@ -34,17 +34,24 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    deploy:
-      replicas: 3    # ← SCALE BACKEND to 3 replicas
+    environment:
+      DB_HOST: postgres
+      DB_USER: admin
+      DB_PASSWORD: admin
+      DB_NAME: mydb
+      DB_PORT: 5432
+    ports:
+      - "5000:5000"
+    restart: always
 
   nginx:
     build: ./frontend
     ports:
       - "3000:80"
-    volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - backend
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
 
 volumes:
   pg_data:
