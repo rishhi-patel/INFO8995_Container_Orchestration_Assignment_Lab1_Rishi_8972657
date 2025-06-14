@@ -147,7 +147,13 @@ All responses are returned as JSON.
 
 ## 📸 Sample Screenshots
 
-> \_\_
+> ![image](https://github.com/user-attachments/assets/c79e5eeb-bccc-4791-bb39-f5b8829d91c3)
+
+> ![image](https://github.com/user-attachments/assets/daf14677-94da-44c0-87c2-7ba9f1f5612d)
+
+> ![image](https://github.com/user-attachments/assets/f241753e-7ac0-429f-8ea9-f45074bb051c)
+
+
 
 ---
 
